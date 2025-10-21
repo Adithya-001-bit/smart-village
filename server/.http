@@ -1,0 +1,40 @@
+### Create a new notification (POST)
+POST http://localhost:3000/api/notificati
+Content-Type: application/json
+
+{
+  "text": "Ration shop will open from 10 AM to 2 PM tomorrow",
+  "type": "ration",
+  "status": "active"
+}
+
+###
+
+### Create another notification (POST)
+POST http://localhost:3000/api/notifications
+Content-Type: application/json
+
+{
+  "text": "Pension distribution will start on 15th October",
+  "type": "pension",
+  "status": "active"
+}
+
+###
+
+### Fetch all notifications (GET)
+GET http://localhost:3000/api/localhost:3000/api/healthcamps
+Accept: application/json
+
+###
+
+### Fetch only active notifications (GET)
+GET http://localhost:3000/api/notifications?status=active
+Accept: application/json
+
+###
+
+### Fetch only expired notifications (GET)
+GET http://localhost:3000/api/notifications?status=expired
+Accept: application/json
+
