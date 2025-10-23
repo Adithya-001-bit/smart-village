@@ -9,6 +9,8 @@ const fundUsageRoutes = require('./routes/fundUsage');
 const notificationRoutes = require('./routes/notification');
 const stockItemRoutes = require('./routes/stockItem');
 const waterAlertRoutes = require('./routes/waterAlert');
+const authRoutes = require('./routes/auth');
+
 
 
 
@@ -37,7 +39,7 @@ app.use('/api/wateralerts', waterAlertRoutes);
 app.use('/',(req,res)=>{
     res.send("Backend is running !!");
 });
-
+app.use('/api/auth', authRoutes);
 
 //port design 
 const PORT = process.env.PORT || 5000
