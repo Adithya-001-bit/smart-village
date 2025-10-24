@@ -1,26 +1,26 @@
 const express = require('express');
 const router = express.Router();
 const FundUsage = require('../models/FundUsage');
+const { authenticateToken, authorizeRoles } = require('../middleware/auth');
 
-// Get all fund usages
-router.get('/', async (req, res) => {
+
+router.post('/', authenticateToken, authorizeRoles(['admin']), async (req, res) => {
   try {
-    const records = await FundUsage.find().sort({ date: -1 });
-    res.json(records);
+    const record = new FundUsage(req.body);
+    await record.save();
+    res.status(201).json(record);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-// Add a new fund usage record
-router.post('/', async (req, res) => {
-  const { amount, description, proofUrl, date, updatedBy } = req.body;
-  const record = new FundUsage({ amount, description, proofUrl, date, updatedBy });
+// Any logged-in user can view fund usage
+router.get('/', authenticateToken, async (req, res) => {
   try {
-    const saved = await record.save();
-    res.status(201).json(saved);
+    const records = await FundUsage.find();
+    res.json(records);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(500).json({ message: err.message });
   }
 });
 
